@@ -9,10 +9,12 @@ import './index.css';
 import {Router, Route, browserHistory} from 'react-router';
 
 
+
 ReactDOM.render(
+	
   (<Router history={browserHistory}>
   	<Route path="/" component={App}>
-  		<Route path="/politicos" component={Politicos}/>
+		<Route path="/politicos" component={Politicos}/>
   		<Route path="/partidos" component={Partidos}/>
   		<Route path="/projetos" component={Projetos}/>
   		<Route path="/processos" component={Processos}/>
