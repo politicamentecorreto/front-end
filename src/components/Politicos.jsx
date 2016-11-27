@@ -16,10 +16,18 @@ class Politicos extends Component {
 
 
 	doSomething() {
+		Parse.initialize('OBH1UBDdv4al3h2Br8qJOFTfyCyMIw816hnooZf3', 's5X6vSQRWTMbRlPPuLceKWHOxpKTpXpaimXQZM2v');
+		Parse.serverURL = 'https://parseapi.back4app.com/';
 		var Politico = Parse.Object.extend("Politico");
 		var politico = new Politico();
 		var Partido = Parse.Object.extend("Partido");
 		var partido = new Partido();
+		var foto = document.getElementById("foto");
+		if (foto.files.length > 0) {
+			foto = foto.files[0];
+			var name = foto.name;
+			foto = new Parse.File(name, foto);
+		}
 
 		partido.set('id', document.getElementById("partido").value);
 		politico.set("nome", document.getElementById("nome").value);
@@ -33,25 +41,28 @@ class Politicos extends Component {
 		politico.set("email", document.getElementById("email").value);
 		politico.set("link", document.getElementById("link").value);
 		politico.set("dataNascimento", document.getElementById("data_nascimento").value);
+		politico.set("fotoCard", foto);
 		politico.save(null, { success: function () { console.log('sucesso'); } });
+		document.getElementById("cadastro_politicos").reset();
 	}
 
 	render() {
 		return (
 			<div>
-				<center><h1 align="center">Cadastro de Políticos</h1></center>
-				<form action="" className="form">
-					<div className="col-md-offset-3 col-md-6 col-md-offset-3">
-						<label for="">Nome </label>
+				<center><h1>Cadastro de Políticos</h1></center>
+				<div className="col-md-offset-3 col-md-6 col-md-offset-3">
+					<form action="#" className="form" method="POST" id='cadastro_politicos'>
+						<label>Nome </label>
 						<input type="text" className="form-control" id="nome" name="nome_politico" />
 						<br></br>
-						<label for="">Nacionalidade</label>
+						<label>Nacionalidade</label>
 						<input type="text" className="form-control" id="nacionalidade" name="nacionalidade_politico" />
 						<br></br>
 						<div className="row">
 							<div className="col-md-3">
-								<label for="">Estado</label>
+								<label>Estado</label>
 								<select name="cidade_politico" id="estado" className="form-control">
+									<option value=""></option>
 									<option value="">SP</option>
 									<option value="">RJ</option>
 									<option value="">PR</option>
@@ -61,8 +72,9 @@ class Politicos extends Component {
 								</select>
 							</div>
 							<div className="col-md-9">
-								<label for="">Cidade</label>
+								<label>Cidade</label>
 								<select name="cidade_politico" id="cidade" className="form-control">
+									<option value=""></option>
 									<option value="">São Paulo</option>
 									<option value="">Rio de Janeiro</option>
 									<option value="">Curitiba</option>
@@ -76,11 +88,12 @@ class Politicos extends Component {
 						<br></br>
 						<div className="row">
 							<div className="col-md-12">
-								<label for="">Partido</label>
+								<label>Partido</label>
 								<SelectPartidos />
 								<br></br>
-								<label for="">Escolaridade</label>
+								<label>Escolaridade</label>
 								<select name="escolaridade_politico" id="escolaridade" className="form-control">
+									<option value="analfa"></option>
 									<option value="analfa">Analfabeto</option>
 									<option value="f_incompleto">Fundamental Incompleto</option>
 									<option value="f_completo">Fundamental Completo</option>
@@ -94,38 +107,42 @@ class Politicos extends Component {
 						</div>
 						<div className="row">
 							<div className="col-md-6">
-								<label for="">Ocupação</label>
+								<label>Ocupação</label>
 								<input type="text" className="form-control" id="ocupacao" name="ocupacao_politico"></input>
 							</div>
+							<div className="col-md-6">
+								<label>Foto</label>
+								<input type="file" className="form-control" id="foto" name="foto"></input>
+							</div>
+
 							<div className="col-md-3">
-								<label for="">Número</label>
+								<label>Número</label>
 								<input type="text" className="form-control" id="numero" name="numero_politico"></input>
 							</div>
 							<div className="col-md-3">
-								<label for="">Sexo</label>
+								<label>Sexo</label>
 								<select name="sexo_politico" id="sexo" className="form-control">
 									<option value="M">Masculino</option>
 									<option value="F">Feminino</option>
 								</select>
 								<br></br>
 							</div>
-
 							<br></br>
 							<div className="col-md-12">
-								<label for="">Site</label>
+								<label>Site</label>
 								<input type="text" className="form-control" id="site" name="site_politico"></input><br></br>
-								<label for="">Email</label>
+								<label>Email</label>
 								<input type="email" className="form-control" id="email" name="email_politico"></input><br></br>
-								<label for="">Link TSE</label>
+								<label>Link TSE</label>
 								<input type="text" className="form-control" id="link" name="linkTSE_politico"></input><br></br>
-								<label for="">Data Nascimento</label>
+								<label>Data Nascimento</label>
 								<input type="text" className="form-control" id="data_nascimento" name="dataNascimento_politico"></input>	<br></br>
-								<button className="btn btn-primary btn-block" onClick={this.doSomething.bind(this)}>Cadastrar</button><br></br>
 							</div>
 						</div>
+					</form>
+					<button className="btn btn-primary btn-block" onClick={this.doSomething.bind(this)}>Cadastrar</button><br></br>
 
-					</div>
-				</form>
+				</div>
 			</div>
 
 		);

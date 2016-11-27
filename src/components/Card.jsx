@@ -14,11 +14,12 @@ class Card extends Component {
 
     render() {
         return (
-			<div className="div.col.md-3">
+			<div className="col-md-offset-3 col-md-3 col-md-offset-3">
               <div className="panel panel-default">
-				  <div className="panel-heading">{this.props.key}</div>
+				  <div className="panel-heading">{this.key}</div>
 				  <div className="panel-body">
-				  		<h1>Nome: {this.props.titulo}</h1>
+				  		<img src={this.props.foto}/>
+				  		<h4>Nome: {this.props.titulo}</h4>
 				  		<p>Sexo: {this.props.sexo}</p>
 				  </div>
 			  </div>  

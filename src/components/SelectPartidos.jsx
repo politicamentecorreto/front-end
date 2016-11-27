@@ -29,8 +29,8 @@ class SelectPartidos extends Component {
             var partidos = [];
             for (var i = 0; i < results.length; i++) {
                 var object = results[i];
-                var partido = new Object();
-                partido.id = object.id;
+                var partido = {};
+                partido.id = object.id
                 partido.sigla = object.get('sigla');
                 partidos.push(partido);
             }
@@ -44,7 +44,7 @@ class SelectPartidos extends Component {
 
     renderOptions() {
         return this.state.partidos.map(partido => {
-            return <OptionPartido id={partido.id} sigla={partido.sigla}/> 
+            return <OptionPartido key={partido.id} objectId={partido.id} sigla={partido.sigla}/> 
         })
     }
 

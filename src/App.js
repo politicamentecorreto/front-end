@@ -64,31 +64,31 @@ function get_Politicos() {
     });
 }*/
 
-function get_Partidos() {
-    Parse.initialize('OBH1UBDdv4al3h2Br8qJOFTfyCyMIw816hnooZf3', 's5X6vSQRWTMbRlPPuLceKWHOxpKTpXpaimXQZM2v');
-    Parse.serverURL = 'https://parseapi.back4app.com/';
-    var Partido = Parse.Object.extend('Partido');
-    var query = new Parse.Query(Partido);
-    //query.equalTo("sigla", "PF");
-    query.find({
-        success: function (results) {
-            alert("Sucesso " + results.length + " scores.");
-            // Do something with the returned Parse.Object values
-            for (var i = 0; i < results.length; i++) {
-                var object = results;
-                var par = new Object();
-                par.sigla = object.get('sigla');
-                par.nome = object.get('nome');
-                par.legenda = object.get('legenda');
-                console.log(par);
+// function get_Partidos() {
+//     Parse.initialize('OBH1UBDdv4al3h2Br8qJOFTfyCyMIw816hnooZf3', 's5X6vSQRWTMbRlPPuLceKWHOxpKTpXpaimXQZM2v');
+//     Parse.serverURL = 'https://parseapi.back4app.com/';
+//     var Partido = Parse.Object.extend('Partido');
+//     var query = new Parse.Query(Partido);
+//     //query.equalTo("sigla", "PF");
+//     query.find({
+//         success: function (results) {
+//             alert("Sucesso " + results.length + " scores.");
+//             // Do something with the returned Parse.Object values
+//             for (var i = 0; i < results.length; i++) {
+//                 var object = results;
+//                 var par = new Object();
+//                 par.sigla = object.get('sigla');
+//                 par.nome = object.get('nome');
+//                 par.legenda = object.get('legenda');
+//                 console.log(par);
 
-            }
-        },
-        error: function (error) {
-            alert("Error: " + error.code + " " + error.message);
-        }
-    });
-}
+//             }
+//         },
+//         error: function (error) {
+//             alert("Error: " + error.code + " " + error.message);
+//         }
+//     });
+// }
 
 //get_Politicos();
 //get_Partidos();
@@ -104,15 +104,13 @@ class App extends Component {
         Parse.initialize('OBH1UBDdv4al3h2Br8qJOFTfyCyMIw816hnooZf3', 's5X6vSQRWTMbRlPPuLceKWHOxpKTpXpaimXQZM2v');
         Parse.serverURL = 'https://parseapi.back4app.com/';
         var Politico = Parse.Object.extend('Politico', 'Partido');
-        //var Partido = Parse.Object.extend('Partido');
         var query = new Parse.Query(Politico);
-        // query.equalTo("nome", "ZOINHO");
         query.find().then(function (results) {
             var poli = [];
             for (var i = 0; i < results.length; i++) {
                 var object = results[i];
-                var pol = new Object();
-                pol.id = object.get('objectId');
+                var pol = {};
+                pol.id = object.id;
                 pol.nome = object.get('nome');
                 pol.sexo = object.get('sexo');
                 pol.telefone = object.get('telefone');
@@ -126,7 +124,7 @@ class App extends Component {
                 pol.popularidade = object.get('popularidade');
                 pol.anexo = object.get('anexo');
                 pol.stats = object.get('stats');
-                pol.foto = object.get('foto');
+                pol.foto = object.get("fotoCard").url();
                 pol.dataNascimento = object.get('dataNascimento');
                 pol.linkpolitico = object.get('link');
                 pol.numero = object.get('numero');
@@ -145,13 +143,9 @@ class App extends Component {
 
     }
 
-
-
-
-
     exibirPoliticos() {
         return this.state.politicos.map(todo => {
-            return <Card key={todo.id} titulo={todo.nome} sexo={todo.sexo} />
+            return <Card key={todo.id} titulo={todo.nome} sexo={todo.sexo} foto={todo.foto} />
         })
     }
 

@@ -14,7 +14,7 @@ class OptionPartidos extends Component {
 
     render() {
         return (
-           <option value={this.props.id}>{this.props.sigla}</option>     
+           <option value={this.props.objectId}>{this.props.sigla}</option>     
         );
     }
 }
